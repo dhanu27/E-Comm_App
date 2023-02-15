@@ -3,9 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_tab_active.xml" value="0.1585" />
+        <entry key="app/src/main/res/drawable/ic_tab_inactive.xml" value="0.1585" />
+        <entry key="app/src/main/res/drawable/selector_tab_list_view.xml" value="0.1585" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/bottom_navigation_menu_view.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_grid_view.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_linear_view.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_linear_view2.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/header_view.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item_view.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/list_items.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/menu/home_bottom_navbar_view.xml" value="0.28177083333333336" />
       </map>
     </option>
   </component>

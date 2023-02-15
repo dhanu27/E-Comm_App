@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class ItemAdapter (private val itemsList: ArrayList<String>) : RecyclerView.Adapter<ItemViewHolder>() {
@@ -14,6 +15,9 @@ class ItemAdapter (private val itemsList: ArrayList<String>) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.titleTextView.text = itemsList[position];
+//        holder.titleTextView.setOnClickListener {
+//            Toast(MainActivity,)
+//        }
     }
 
     override fun getItemCount(): Int {
@@ -23,4 +27,5 @@ class ItemAdapter (private val itemsList: ArrayList<String>) : RecyclerView.Adap
 
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val titleTextView : TextView = itemView.findViewById(R.id.title)
+
 }
