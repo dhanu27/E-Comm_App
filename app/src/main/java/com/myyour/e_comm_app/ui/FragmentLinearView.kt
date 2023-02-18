@@ -1,4 +1,4 @@
-package com.myyour.e_comm_app
+package com.myyour.e_comm_app.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,13 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.myyour.e_comm_app.ItemAdapter
+import com.myyour.e_comm_app.Utils.NetworkResult
 import com.myyour.e_comm_app.databinding.FragmentLinearViewBinding
-import com.myyour.e_comm_app.enums.VIEWTYPE
-import com.myyour.e_comm_app.model.Item
+import com.myyour.e_comm_app.Utils.enums.VIEWTYPE
 import com.myyour.e_comm_app.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,17 +37,27 @@ class FragmentLinearView : Fragment() {
 //        val itemRecyclerView: RecyclerView = view.findViewById(R.id.itemRecyclerView)
         val linearLayoutManager = LinearLayoutManager(activity)
 
-        binding.itemRecyclerView.layoutManager = linearLayoutManager
-
         productViewModel.products?.observe(requireActivity()) {
-            productViewModel.products.value?.let {
-                binding.itemRecyclerView.adapter = ItemAdapter(it, VIEWTYPE.LINEARVIEW)
-                binding.itemRecyclerView.addItemDecoration(
-                    DividerItemDecoration(
-                        activity,
-                        linearLayoutManager.orientation
+            when(it){
+                is NetworkResult.Loading ->{
+                    binding.loaderRegion.root.visibility = View.VISIBLE;
+                }
+                is NetworkResult.Loaded ->{
+                    binding.loaderRegion.root.visibility = View.GONE;
+                    binding.itemRecyclerView.layoutManager = linearLayoutManager
+                    val itemList = it.data!!;
+                    binding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.LINEARVIEW)
+                    binding.itemRecyclerView.addItemDecoration(
+                        DividerItemDecoration(
+                            activity,
+                            linearLayoutManager.orientation
+                        )
                     )
-                )
+                }
+                is NetworkResult.Error ->{
+                    binding.loaderRegion.root.visibility = View.GONE;
+                    binding.errorRegion.errorText.text = it.msg
+                }
             }
         }
     }

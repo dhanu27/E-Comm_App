@@ -4,32 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <include
         android:id="@+id/header_section_view"
-        layout="@layout/header_view"/>
+        layout="@layout/header_view" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_nav_container"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_nav_container"
         app:layout_constraintTop_toBottomOf="@id/header_section_view"
-        app:navGraph="@navigation/nav_graph"
-        app:defaultNavHost="true"
-        />
+        app:navGraph="@navigation/nav_graph" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/home_bottom_navbar_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

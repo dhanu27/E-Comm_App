@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.myyour.e_comm_app.Utils.StringsConstant
-import com.myyour.e_comm_app.enums.VIEWTYPE
+import com.myyour.e_comm_app.Utils.Constants
+import com.myyour.e_comm_app.Utils.enums.VIEWTYPE
 import com.myyour.e_comm_app.model.Item
 import com.squareup.picasso.Picasso
 
@@ -29,7 +29,7 @@ class ItemAdapter(private val itemsList: List<Item>, private val viewType: VIEWT
 
         if (viewType == VIEWTYPE.LINEARVIEW) {
             holder.extraView?.text = itemsList[position].extra ?: ""
-            holder.priceView.text = StringsConstant.mrp + itemsList[position].price
+            holder.priceView.text = Constants.mrpText + itemsList[position].price
         } else {
             holder.extraView?.text = ""
             holder.priceView.text = itemsList[position].price

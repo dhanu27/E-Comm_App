@@ -7,4 +7,5 @@
     <dimen name="margin_half">6dp</dimen>
     <dimen name="textSize_18sp">18sp</dimen>
     <dimen name="textSize_16sp">18sp</dimen>
+    <dimen name="thirty_two_dp">32dp</dimen>
 </resources>

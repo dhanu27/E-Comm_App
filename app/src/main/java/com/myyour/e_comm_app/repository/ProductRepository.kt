@@ -1,9 +1,11 @@
 package com.myyour.e_comm_app.repository
 
 import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.myyour.e_comm_app.Utils.InternetUtils
+import com.myyour.e_comm_app.Utils.NetworkResult
 import com.myyour.e_comm_app.api.ProductService
 import com.myyour.e_comm_app.model.Item
 import com.myyour.e_comm_app.model.ResponseDTO
@@ -18,28 +20,33 @@ class ProductRepository @Inject constructor(
     private val productService: ProductService,
     private val appDatabase: AppDatabase
 ) {
-    private val productsLiveData = MutableLiveData<List<Item>>()
-    val products: LiveData<List<Item>>
+    private val productsLiveData = MutableLiveData<NetworkResult<List<Item>>>()
+    val products: LiveData<NetworkResult<List<Item>>>
         get() = productsLiveData
 
+
     suspend fun getProductList() {
-//        productsLiveData.postValue(isLoading);
+        productsLiveData.postValue(NetworkResult.Loading())
 //      When user is online call APi else getData from DB
         if (InternetUtils.isOnline(applicationContext)) {
             val response = productService.getProductList();
             if (response?.body() != null) {
                 val responseBody = response.body() as ResponseDTO
+                if(!responseBody.error.isNullOrEmpty()){
+                    productsLiveData.postValue(NetworkResult.Error(responseBody.error));
+                }
                 val productList: List<Item> = responseBody.data.items!!;
 
-                productsLiveData.postValue(productList);
+                productsLiveData.postValue(NetworkResult.Loaded(productList));
                 setDataIntoLocalDB(productList)
-            }else{
-                //TODO:- Handle Error case
+            } else {
+                productsLiveData.postValue(NetworkResult.Error(response.errorBody().toString()));
+                Toast.makeText(applicationContext, "Something Went wrong", Toast.LENGTH_SHORT)
+                    .show()
             }
         } else {
-            val productsList = appDatabase.productDao().getAll()
-            val itemsList: List<Item> = getProductsListFromLocalDB(productsList)
-            productsLiveData.postValue(itemsList);
+            val itemsList: List<Item> = getProductsListFromLocalDB()
+            productsLiveData.postValue(NetworkResult.Loaded(itemsList));
         }
     }
 
@@ -56,14 +63,27 @@ class ProductRepository @Inject constructor(
         appDatabase.productDao().insertAll(productRows)
     }
 
-    private fun getProductsListFromLocalDB(productsList:List<ProductEntity>) : List<Item>{
-        val itemsList: List<Item> = productsList.map {
+    private fun getProductsListFromLocalDB(): List<Item> {
+        val productsList = appDatabase.productDao().getAll()
+        return mapModelToEntity(productsList);
+    }
+
+    fun getProductsByName(searchString: String) {
+        val productRows: List<ProductEntity> =
+            appDatabase.productDao().findProductsByName(searchString)
+        val productList = mapModelToEntity(productRows);
+        productsLiveData.postValue(NetworkResult.Loaded(productList));
+    }
+
+    private fun mapModelToEntity(productList: List<ProductEntity>): List<Item> {
+        val productList: List<Item> = productList.map {
             Item(
                 name = it.name,
                 price = it.price, extra = it.extra, image = it.image
             )
         }
-        return itemsList;
+        return productList;
     }
+
 
 }

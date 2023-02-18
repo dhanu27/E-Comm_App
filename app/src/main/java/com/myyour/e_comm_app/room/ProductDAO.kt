@@ -7,12 +7,9 @@ interface ProductDAO {
     @Query("SELECT * FROM product")
     fun getAll(): List<ProductEntity>
 
-//    @Query("SELECT * FROM user WHERE uid IN (:userIds)")
-//    fun loadAllByIds(userIds: IntArray): List<Item>
-//
-//    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " +
-//            "last_name LIKE :last LIMIT 1")
-//    fun findByName(first: String, last: String): Item
+    @Query("SELECT * FROM product WHERE name LIKE :search")
+    fun findProductsByName(search: String?): List<ProductEntity>
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(product: List<ProductEntity>)

@@ -1,4 +1,4 @@
-package com.myyour.e_comm_app
+package com.myyour.e_comm_app.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.myyour.e_comm_app.ItemAdapter
+import com.myyour.e_comm_app.Utils.NetworkResult
 import com.myyour.e_comm_app.databinding.FragmentGridViewBinding
-import com.myyour.e_comm_app.databinding.FragmentLinearViewBinding
-import com.myyour.e_comm_app.enums.VIEWTYPE
+import com.myyour.e_comm_app.Utils.enums.VIEWTYPE
 import com.myyour.e_comm_app.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,10 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class FragmentGridView : Fragment() {
     private val productViewModel: ProductViewModel by activityViewModels()
     private lateinit var binding: FragmentGridViewBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,16 +30,22 @@ class FragmentGridView : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val gridLayoutManager = GridLayoutManager(activity, 3)
-        binding.itemRecyclerView.layoutManager = gridLayoutManager
+
         productViewModel.products?.observe(requireActivity()) {
-            productViewModel.products.value?.let {
-                binding.itemRecyclerView.adapter = ItemAdapter(it, VIEWTYPE.GRIDVIEW)
-                binding.itemRecyclerView.addItemDecoration(
-                    DividerItemDecoration(
-                        activity,
-                        gridLayoutManager.orientation
-                    )
-                )
+            when(it){
+                is NetworkResult.Loading ->{
+                    binding.loaderRegion.root.visibility = View.VISIBLE;
+                }
+                is NetworkResult.Loaded ->{
+                    binding.loaderRegion.root.visibility = View.GONE;
+                    binding.itemRecyclerView.layoutManager = gridLayoutManager
+                    val itemList = it.data!!;
+                    binding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.GRIDVIEW)
+                }
+                is NetworkResult.Error ->{
+                    binding.loaderRegion.root.visibility = View.GONE;
+                    binding.errorRegion.errorText.text = it.msg
+                }
             }
         }
     }
