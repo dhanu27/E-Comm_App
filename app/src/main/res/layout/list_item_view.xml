@@ -14,9 +14,8 @@
         app:layout_constraintEnd_toStartOf="@+id/title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/ic_launcher_foreground"
-        android:background="#CF5A5A"
-        android:padding="1dp"/>
+        android:padding="1dp"
+        android:contentDescription="@string/product_image"/>
 
     <TextView
         android:id="@+id/title"

@@ -6,6 +6,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface ProductService {
-    @GET("v3/b6a30bb0-140f-4966-8608-1dc35fa1fadc")
+    @GET("v3/995ce2a0-1daf-4993-915f-8c198f3f752c")
     suspend fun getProductList() : Response<ResponseDTO>
 }

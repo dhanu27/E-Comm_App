@@ -4,7 +4,6 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
-
 }
 
 android {
@@ -12,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.myyour.e_comm_app"
-        minSdk 21
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -41,9 +40,12 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:+'
+
     def fragment_version = "1.5.5"
     def nav_version = "2.5.3"
+    def room_version = "2.5.0"
+
+    implementation 'androidx.core:core-ktx:+'
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -58,10 +60,19 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.3'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.10.3'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.3'
+    // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation "androidx.activity:activity-ktx:1.6.1"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
-
+    // Hilt
     implementation "com.google.dagger:hilt-android:2.44"
     kapt "com.google.dagger:hilt-compiler:2.44"
+
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.8'
 }

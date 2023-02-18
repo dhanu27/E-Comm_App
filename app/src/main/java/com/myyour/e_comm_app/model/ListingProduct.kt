@@ -1,9 +1,7 @@
 package com.myyour.e_comm_app.model
 
-import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import kotlinx.android.parcel.Parcelize
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ResponseDTO(
@@ -12,13 +10,14 @@ data class ResponseDTO(
     @JsonProperty("data") val data: DataDTO,
 )
 
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Item(
     @JsonProperty("name") val name: String,
     @JsonProperty("price") val price: String,
-    @JsonProperty("extra") val extra: String? = null,
-    @JsonProperty("image") val image: String? = null,
+    @JsonProperty("extra") val extra: String?,
+    @JsonProperty("image") val image: String?,
 )
-
 data class DataDTO(
-    @JsonProperty("items") val items: ArrayList<Item>? = null,
+    @JsonProperty("items") val items: List<Item>?,
 )

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.myyour.e_comm_app.databinding.FragmentLinearViewBinding
+import com.myyour.e_comm_app.enums.VIEWTYPE
 import com.myyour.e_comm_app.model.Item
 import com.myyour.e_comm_app.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +42,7 @@ class FragmentLinearView : Fragment() {
 
         productViewModel.products?.observe(requireActivity()) {
             productViewModel.products.value?.let {
-                binding.itemRecyclerView.adapter = ItemAdapter(it, 0)
+                binding.itemRecyclerView.adapter = ItemAdapter(it, VIEWTYPE.LINEARVIEW)
                 binding.itemRecyclerView.addItemDecoration(
                     DividerItemDecoration(
                         activity,
