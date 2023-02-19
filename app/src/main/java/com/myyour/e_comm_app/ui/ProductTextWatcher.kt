@@ -17,13 +17,11 @@ class ProductTextWatcher(private var editText: AppCompatEditText,
     }
 
     override fun afterTextChanged(editable: Editable?) {
-        var editedString = editable.toString()
+        val editedString:String = editable.toString()
         if (editedString.isEmpty()) {
             return
         }
         // remove textwatcher
         editText.removeTextChangedListener(this)
-
-
     }
 }

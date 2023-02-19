@@ -1,8 +1,8 @@
 package com.myyour.e_comm_app.viewmodel
 
 
-
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myyour.e_comm_app.Utils.NetworkResult
@@ -19,17 +19,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductViewModel @Inject constructor(private val productRepository: ProductRepository) : ViewModel() {
+class ProductViewModel @Inject constructor(private val productRepository: ProductRepository) :
+    ViewModel() {
+    private var _products:MutableLiveData<NetworkResult<List<Item>>> =
+        MutableLiveData<NetworkResult<List<Item>>>();
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            productRepository.getProductList()
-        }
+        getProductList()
     }
-    val products : LiveData<NetworkResult<List<Item>>>
-    get() = productRepository.products
-    fun getProductsByName(search:String){
+    val products: LiveData<NetworkResult<List<Item>>>
+        get() = _products
+
+    fun getProductList() {
         viewModelScope.launch(Dispatchers.IO) {
-            productRepository.getProductsByName(search)
+            _products.postValue(NetworkResult.Loading())
+            val result = productRepository.getProductList()
+            _products.postValue(result)
         }
     }
 }

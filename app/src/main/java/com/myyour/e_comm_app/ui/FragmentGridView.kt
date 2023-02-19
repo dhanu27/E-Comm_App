@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.myyour.e_comm_app.ItemAdapter
 import com.myyour.e_comm_app.Utils.NetworkResult
@@ -31,22 +32,21 @@ class FragmentGridView : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val gridLayoutManager = GridLayoutManager(activity, 3)
 
-        productViewModel.products?.observe(requireActivity()) {
+        productViewModel.products?.observe(viewLifecycleOwner, Observer{
+            binding.loaderRegion.root.visibility = View.GONE;
             when(it){
                 is NetworkResult.Loading ->{
                     binding.loaderRegion.root.visibility = View.VISIBLE;
                 }
                 is NetworkResult.Loaded ->{
-                    binding.loaderRegion.root.visibility = View.GONE;
                     binding.itemRecyclerView.layoutManager = gridLayoutManager
                     val itemList = it.data!!;
                     binding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.GRIDVIEW)
                 }
                 is NetworkResult.Error ->{
-                    binding.loaderRegion.root.visibility = View.GONE;
                     binding.errorRegion.errorText.text = it.msg
                 }
             }
-        }
+        })
     }
 }

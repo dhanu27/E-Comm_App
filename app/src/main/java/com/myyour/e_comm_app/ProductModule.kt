@@ -21,8 +21,4 @@ class AppModule {
     @Singleton
     fun provideDataBaseInstance(@ApplicationContext applicationContext:Context):AppDatabase =   AppDatabase.getDatabaseInstance(applicationContext)
 
-    @Provides
-    @Singleton
-    fun provideApplicationContext(@ApplicationContext applicationContext:Context):Context = applicationContext
-
 }

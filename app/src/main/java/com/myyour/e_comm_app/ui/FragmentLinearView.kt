@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.myyour.e_comm_app.ItemAdapter
@@ -18,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FragmentLinearView : Fragment() {
-    private val productViewModel:ProductViewModel by activityViewModels()
+    private val productViewModel: ProductViewModel by activityViewModels()
     private lateinit var binding: FragmentLinearViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,18 +35,17 @@ class FragmentLinearView : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val itemRecyclerView: RecyclerView = view.findViewById(R.id.itemRecyclerView)
         val linearLayoutManager = LinearLayoutManager(activity)
 
-        productViewModel.products?.observe(requireActivity()) {
-            when(it){
-                is NetworkResult.Loading ->{
+        productViewModel.products?.observe(viewLifecycleOwner, Observer {
+            binding.loaderRegion.root.visibility = View.GONE;
+            when (it) {
+                is NetworkResult.Loading -> {
                     binding.loaderRegion.root.visibility = View.VISIBLE;
                 }
-                is NetworkResult.Loaded ->{
-                    binding.loaderRegion.root.visibility = View.GONE;
+                is NetworkResult.Loaded -> {
                     binding.itemRecyclerView.layoutManager = linearLayoutManager
-                    val itemList = it.data!!;
+                    val itemList = it.data ?: emptyList();
                     binding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.LINEARVIEW)
                     binding.itemRecyclerView.addItemDecoration(
                         DividerItemDecoration(
@@ -54,11 +54,10 @@ class FragmentLinearView : Fragment() {
                         )
                     )
                 }
-                is NetworkResult.Error ->{
-                    binding.loaderRegion.root.visibility = View.GONE;
+                is NetworkResult.Error -> {
                     binding.errorRegion.errorText.text = it.msg
                 }
             }
-        }
+        })
     }
 }
