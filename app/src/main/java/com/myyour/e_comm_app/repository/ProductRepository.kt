@@ -73,12 +73,4 @@ class ProductRepository @Inject constructor(
         return newProductList
     }
 
-    //
-//    suspend fun getProductsByName(searchString: String) {
-//        val productRows: List<ProductEntity> =
-//            appDatabase.productDao().findProductsByName(searchString)
-//        val productList = mapModelToEntity(productRows)
-//    }
-
-
 }
