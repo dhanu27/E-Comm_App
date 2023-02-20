@@ -2,6 +2,7 @@ package com.myyour.e_comm_app.repository
 
 import android.content.Context
 import android.widget.Toast
+import com.myyour.e_comm_app.Utils.Constants.versionId
 import com.myyour.e_comm_app.Utils.InternetUtils
 import com.myyour.e_comm_app.Utils.NetworkResult
 import com.myyour.e_comm_app.api.ProductService
@@ -21,23 +22,26 @@ class ProductRepository @Inject constructor(
     suspend fun getProductList(): NetworkResult<List<Item>> {
 //      When user is online call APi else getData from DB
         if (InternetUtils.isOnline(applicationContext)) {
-            val response = productService.getProductList()
+             try {
+                 val response = productService.getProductList(versionId)
+                if (response.body() != null) {
+                    val responseBody = response.body() as ResponseDTO
 
-            if (response.body() != null) {
-                val responseBody = response.body() as ResponseDTO
+                    if (!responseBody.error.isNullOrEmpty()) {
+                        return NetworkResult.Error(responseBody.error)
+                    }
 
-                if (!responseBody.error.isNullOrEmpty()) {
-                    return NetworkResult.Error(responseBody.error)
+                    val productList: List<Item> = responseBody.data.items!!
+                     setDataIntoLocalDB(productList)
+                    return NetworkResult.Loaded(productList)
+                } else {
+
+                    Toast.makeText(applicationContext, "Something Went wrong", Toast.LENGTH_SHORT)
+                        .show()
+                    return NetworkResult.Error(response.errorBody().toString())
                 }
-
-                val productList: List<Item> = responseBody.data.items!!
-                setDataIntoLocalDB(productList)
-                return NetworkResult.Loaded(productList)
-            } else {
-
-                Toast.makeText(applicationContext, "Something Went wrong", Toast.LENGTH_SHORT)
-                    .show()
-                return NetworkResult.Error(response.errorBody().toString())
+            } catch (e: Exception) {
+                 return NetworkResult.Error("Something Went Wrong")
             }
         } else {
             val itemsList = getProductsListFromLocalDB()

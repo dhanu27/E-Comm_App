@@ -55,4 +55,18 @@ internal class ProductViewModelTest {
     val result = sut.products.getOrAwaitValue()
     Assert.assertEquals(2,result.data!!.size)
   }
+
+
+  @Test
+  fun test_Error_GetProductList()= runTest{
+    val msgString = "Something Went Wrong"
+    Mockito.`when`(productRepository.getProductList()).thenReturn(NetworkResult.Error(msgString))
+    val sut = ProductViewModel(productRepository)
+    sut.getProductList()
+    testDispatcher.scheduler.advanceUntilIdle()
+    val result = sut.products.getOrAwaitValue()
+    Assert.assertEquals(true,result is NetworkResult.Error)
+    Assert.assertEquals(msgString,result.msg)
+  }
+
 }
