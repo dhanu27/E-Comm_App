@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var headerBinding : HeaderViewBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide() // To hide title bar
         setContentView(R.layout.activity_main)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_nav_container) as NavHostFragment
