@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.myyour.e_comm_app.ItemAdapter
+import com.myyour.e_comm_app.adapter.ItemAdapter
 import com.myyour.e_comm_app.Utils.NetworkResult
 import com.myyour.e_comm_app.databinding.FragmentGridViewBinding
 import com.myyour.e_comm_app.Utils.enums.VIEWTYPE
@@ -17,34 +17,34 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FragmentGridView : Fragment() {
-    private val productViewModel: ProductViewModel by activityViewModels()
-    private lateinit var binding: FragmentGridViewBinding
+    private val mProductViewModel: ProductViewModel by activityViewModels()
+    private lateinit var mBinding: FragmentGridViewBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentGridViewBinding.inflate(inflater, container, false)
-        return (binding.root)
+        mBinding = FragmentGridViewBinding.inflate(inflater, container, false)
+        return (mBinding.root)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val gridLayoutManager = GridLayoutManager(activity, 3)
 
-        productViewModel.products?.observe(viewLifecycleOwner, Observer{
-            binding.loaderRegion.root.visibility = View.GONE;
+        mProductViewModel.products?.observe(viewLifecycleOwner, Observer{
+            mBinding.loaderRegion.root.visibility = View.GONE;
             when(it){
                 is NetworkResult.Loading ->{
-                    binding.loaderRegion.root.visibility = View.VISIBLE;
+                    mBinding.loaderRegion.root.visibility = View.VISIBLE;
                 }
                 is NetworkResult.Loaded ->{
-                    binding.itemRecyclerView.layoutManager = gridLayoutManager
+                    mBinding.itemRecyclerView.layoutManager = gridLayoutManager
                     val itemList = it.data!!;
-                    binding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.GRIDVIEW)
+                    mBinding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.GRIDVIEW)
                 }
                 is NetworkResult.Error ->{
-                    binding.errorRegion.errorText.text = it.msg
+                    mBinding.errorRegion.errorText.text = it.msg
                 }
             }
         })

@@ -1,6 +1,7 @@
 package com.myyour.e_comm_app.viewmodel
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,12 +23,12 @@ import javax.inject.Inject
 class ProductViewModel @Inject constructor(private val productRepository: ProductRepository) :
     ViewModel() {
     private var _products:MutableLiveData<NetworkResult<List<Item>>> =
-        MutableLiveData<NetworkResult<List<Item>>>();
+        MutableLiveData<NetworkResult<List<Item>>>()
+    val products = _products
+
     init {
         getProductList()
     }
-    val products: LiveData<NetworkResult<List<Item>>>
-        get() = _products
 
     fun getProductList() {
         viewModelScope.launch(Dispatchers.IO) {

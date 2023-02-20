@@ -1,4 +1,4 @@
-package com.myyour.e_comm_app
+package com.myyour.e_comm_app.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.myyour.e_comm_app.R
 import com.myyour.e_comm_app.Utils.Constants
 import com.myyour.e_comm_app.Utils.enums.VIEWTYPE
 import com.myyour.e_comm_app.model.Item
@@ -25,7 +26,7 @@ class ItemAdapter(private val itemsList: List<Item>, private val viewType: VIEWT
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.titleTextView.text = itemsList[position].name
 
-        setImageIntoView(position,holder.imageView)
+        setImageIntoView(position, holder.imageView)
 
         if (viewType == VIEWTYPE.LINEARVIEW) {
             holder.extraView?.text = itemsList[position].extra ?: ""
@@ -40,11 +41,11 @@ class ItemAdapter(private val itemsList: List<Item>, private val viewType: VIEWT
         return itemsList.size;
     }
 
-    private fun setImageIntoView(position: Int ,view:ImageView){
-        val imgUrl:String = itemsList[position].image?:"";
-        if(!imgUrl.isNullOrEmpty()) {
+    private fun setImageIntoView(position: Int, view: ImageView) {
+        val imgUrl: String = itemsList[position].image ?: "";
+        if (imgUrl.isEmpty().not()) {
             Picasso.get().load(imgUrl).into(view);
-        }else{
+        } else {
             // Set image to null if no image is there
             view.setImageDrawable(null);
         }

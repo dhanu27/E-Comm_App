@@ -23,32 +23,32 @@
         android:layout_width="wrap_content"
         android:layout_height="19dp"
         android:layout_marginStart="16dp"
-        android:text="Title"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/price"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@id/imageView" />
+        app:layout_constraintTop_toTopOf="@id/imageView"
+        tools:text="Title" />
 
     <TextView
         android:id="@+id/price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="MRP: ₹130.0 "
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/imageView"
         app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="MRP: ₹130.0 " />
 
     <TextView
         android:id="@+id/extra"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Same Day Shopping"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/price"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/price" />
+        app:layout_constraintTop_toTopOf="@+id/price"
+        tools:text="Same Day Shopping" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

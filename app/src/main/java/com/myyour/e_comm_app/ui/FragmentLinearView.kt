@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.myyour.e_comm_app.ItemAdapter
+import com.myyour.e_comm_app.adapter.ItemAdapter
 import com.myyour.e_comm_app.Utils.NetworkResult
 import com.myyour.e_comm_app.databinding.FragmentLinearViewBinding
 import com.myyour.e_comm_app.Utils.enums.VIEWTYPE
@@ -19,35 +19,31 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FragmentLinearView : Fragment() {
-    private val productViewModel: ProductViewModel by activityViewModels()
-    private lateinit var binding: FragmentLinearViewBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val mProductViewModel: ProductViewModel by activityViewModels()
+    private lateinit var mBinding: FragmentLinearViewBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLinearViewBinding.inflate(inflater, container, false)
-        return (binding.root)
+        mBinding = FragmentLinearViewBinding.inflate(inflater, container, false)
+        return (mBinding.root)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val linearLayoutManager = LinearLayoutManager(activity)
 
-        productViewModel.products?.observe(viewLifecycleOwner, Observer {
-            binding.loaderRegion.root.visibility = View.GONE;
+        mProductViewModel.products.observe(viewLifecycleOwner, Observer {
+            mBinding.loaderRegion.root.visibility = View.GONE
             when (it) {
                 is NetworkResult.Loading -> {
-                    binding.loaderRegion.root.visibility = View.VISIBLE;
+                    mBinding.loaderRegion.root.visibility = View.VISIBLE
                 }
                 is NetworkResult.Loaded -> {
-                    binding.itemRecyclerView.layoutManager = linearLayoutManager
+                    mBinding.itemRecyclerView.layoutManager = linearLayoutManager
                     val itemList = it.data ?: emptyList();
-                    binding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.LINEARVIEW)
-                    binding.itemRecyclerView.addItemDecoration(
+                    mBinding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.LINEARVIEW)
+                    mBinding.itemRecyclerView.addItemDecoration(
                         DividerItemDecoration(
                             activity,
                             linearLayoutManager.orientation
@@ -55,7 +51,7 @@ class FragmentLinearView : Fragment() {
                     )
                 }
                 is NetworkResult.Error -> {
-                    binding.errorRegion.errorText.text = it.msg
+                    mBinding.errorRegion.errorText.text = it.msg
                 }
             }
         })
