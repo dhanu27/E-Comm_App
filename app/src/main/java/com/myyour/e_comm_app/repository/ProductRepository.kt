@@ -64,10 +64,10 @@ class ProductRepository @Inject constructor(
 
     private suspend fun getProductsListFromLocalDB(): List<Item> {
         val productsList = appDatabase.productDao().getAll()
-        return mapModelToEntity(productsList)
+        return mapEntityToModel(productsList)
     }
 
-    private fun mapModelToEntity(productList: List<ProductEntity>): List<Item> {
+    private fun mapEntityToModel(productList: List<ProductEntity>): List<Item> {
         val newProductList: List<Item> = productList.map {
             Item(
                 name = it.name,
@@ -75,6 +75,15 @@ class ProductRepository @Inject constructor(
             )
         }
         return newProductList
+    }
+
+    suspend fun getProductListByName(name:String) :NetworkResult<List<Item>> {
+        return try {
+            val productsList = appDatabase.productDao().findProductsByName("%$name%")
+            NetworkResult.Loaded(mapEntityToModel(productsList))
+        }catch (e:Exception){
+            NetworkResult.Loaded(getProductsListFromLocalDB())
+        }
     }
 
 }

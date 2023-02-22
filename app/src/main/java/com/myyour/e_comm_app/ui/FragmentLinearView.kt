@@ -32,6 +32,10 @@ class FragmentLinearView : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val linearLayoutManager = LinearLayoutManager(activity)
+        val itemDivider = DividerItemDecoration(
+            activity,
+            linearLayoutManager.orientation
+        )
 
         mProductViewModel.products.observe(viewLifecycleOwner, Observer {
             mBinding.loaderRegion.root.visibility = View.GONE
@@ -43,11 +47,9 @@ class FragmentLinearView : Fragment() {
                     mBinding.itemRecyclerView.layoutManager = linearLayoutManager
                     val itemList = it.data ?: emptyList();
                     mBinding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.LINEARVIEW)
+                    mBinding.itemRecyclerView.removeItemDecoration(itemDivider)
                     mBinding.itemRecyclerView.addItemDecoration(
-                        DividerItemDecoration(
-                            activity,
-                            linearLayoutManager.orientation
-                        )
+                        itemDivider
                     )
                 }
                 is NetworkResult.Error -> {

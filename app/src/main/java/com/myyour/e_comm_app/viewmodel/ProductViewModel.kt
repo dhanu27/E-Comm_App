@@ -37,4 +37,11 @@ class ProductViewModel @Inject constructor(private val productRepository: Produc
             _products.postValue(result)
         }
     }
+
+    fun getProductListOnSearch(searchString:String){
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = productRepository.getProductListByName(searchString)
+            _products.postValue(result)
+        }
+    }
 }
