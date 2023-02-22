@@ -8,4 +8,5 @@
     <dimen name="textSize_18sp">18sp</dimen>
     <dimen name="textSize_16sp">18sp</dimen>
     <dimen name="thirty_two_dp">32dp</dimen>
+    <dimen name="grid_image_corner_radius">8dp</dimen>
 </resources>
