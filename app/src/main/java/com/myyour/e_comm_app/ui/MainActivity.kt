@@ -67,14 +67,16 @@ class MainActivity : AppCompatActivity() {
     private fun observeFragmentSwipeGestures() {
         mProductViewModel.swipeGesture.observe(this) {
             val index: Int = it.first;
-
-            if (it.second == SwipeGestures.Right) {
-                if (index > 0) {
-                    handleNavigation(menuItemsArray[index - 1])
+            when(it.second){
+                SwipeGestures.Right -> {
+                    if (index > 0) {
+                        handleNavigation(menuItemsArray[index - 1])
+                    }
                 }
-            } else {
-                if (index < routesList.size - 1) {
-                    handleNavigation(menuItemsArray[index + 1])
+                SwipeGestures.Left ->{
+                    if (index < menuItemsArray.size - 1) {
+                        handleNavigation(menuItemsArray[index + 1])
+                    }
                 }
             }
         }

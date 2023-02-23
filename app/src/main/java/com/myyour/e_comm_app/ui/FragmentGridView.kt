@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.myyour.e_comm_app.Utils.Constants.routesList
 import com.myyour.e_comm_app.adapter.ItemAdapter
 import com.myyour.e_comm_app.Utils.NetworkResult
 import com.myyour.e_comm_app.databinding.FragmentGridViewBinding
@@ -33,31 +32,38 @@ class FragmentGridView : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val gridLayoutManager = GridLayoutManager(activity, 3)
 
-        mProductViewModel.products?.observe(viewLifecycleOwner, Observer{
+        mProductViewModel.products?.observe(viewLifecycleOwner, Observer {
             mBinding.loaderRegion.root.visibility = View.GONE;
-            when(it){
-                is NetworkResult.Loading ->{
+            when (it) {
+                is NetworkResult.Loading -> {
                     mBinding.loaderRegion.root.visibility = View.VISIBLE;
                 }
-                is NetworkResult.Loaded ->{
+                is NetworkResult.Loaded -> {
                     mBinding.itemRecyclerView.layoutManager = gridLayoutManager
                     val itemList = it.data!!;
                     mBinding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.GRIDVIEW)
                 }
-                is NetworkResult.Error ->{
+                is NetworkResult.Error -> {
                     mBinding.errorRegion.errorText.text = it.msg
                 }
             }
         })
-        mBinding.itemRecyclerView.setOnTouchListener(object: OnSwipeTouchListener(context) {
+        mBinding.itemRecyclerView.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeLeft() {
                 super.onSwipeLeft()
                 mProductViewModel.swipeLeft(1)
             }
+
             override fun onSwipeRight() {
                 super.onSwipeRight()
                 mProductViewModel.swipeRight(1)
             }
         })
+        mBinding.swipeRefresh.setOnRefreshListener {
+            mProductViewModel.refreshProductList()
+        }
+        mProductViewModel.isReFreshing.observe(viewLifecycleOwner) {
+            mBinding.swipeRefresh.isRefreshing = it
+        }
     }
 }

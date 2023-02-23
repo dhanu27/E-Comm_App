@@ -1,12 +1,14 @@
 package com.myyour.e_comm_app.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.myyour.e_comm_app.adapter.ItemAdapter
@@ -47,10 +49,6 @@ class FragmentLinearView : Fragment() {
                     mBinding.itemRecyclerView.layoutManager = linearLayoutManager
                     val itemList = it.data ?: emptyList();
                     mBinding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.LINEARVIEW)
-//                    mBinding.itemRecyclerView.removeItemDecoration(itemDivider)
-//                    mBinding.itemRecyclerView.addItemDecoration(
-//                        itemDivider
-//                    )
                 }
                 is NetworkResult.Error -> {
                     mBinding.errorRegion.errorText.text = it.msg
@@ -58,17 +56,25 @@ class FragmentLinearView : Fragment() {
             }
         })
 
-        mBinding.itemRecyclerView.setOnTouchListener(object: OnSwipeTouchListener(context) {
+        mBinding.itemRecyclerView.setOnTouchListener(object : OnSwipeTouchListener(context) {
             override fun onSwipeLeft() {
                 super.onSwipeLeft()
                 mProductViewModel.swipeLeft(0)
+                findNavController().currentDestination?.id
             }
+
             override fun onSwipeRight() {
                 super.onSwipeRight()
                 mProductViewModel.swipeRight(0)
             }
         })
 
+        mBinding.swipeRefresh.setOnRefreshListener {
+            mProductViewModel.refreshProductList()
+        }
+        mProductViewModel.isReFreshing.observe(viewLifecycleOwner) {
+            mBinding.swipeRefresh.isRefreshing = it
+        }
 
     }
 }

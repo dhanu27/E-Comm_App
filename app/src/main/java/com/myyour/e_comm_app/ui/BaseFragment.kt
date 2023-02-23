@@ -40,7 +40,7 @@ abstract class BaseFragment<VM : ViewModel>() : Fragment() {
 //    }
 
     private fun swipeObservation(){
-        fragmentView.setOnTouchListener(object: OnSwipeTouchListener(requireContext()) {
+        fragmentView.setOnTouchListener(object: OnSwipeTouchListener(fragmentView.context) {
             override fun onSwipeLeft() {
 //                if(viewModel is ProductViewModel) {
 //                    viewModel.swipeLeft(layoutId)

@@ -20,6 +20,7 @@ import com.myyour.e_comm_app.model.ResponseDTO
 import com.myyour.e_comm_app.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
@@ -36,12 +37,16 @@ class ProductViewModel @Inject constructor(private val productRepository: Produc
         MutableLiveData<Pair<Int, SwipeGestures>>()
     val swipeGesture = mSwipeGesture
 
+    private var _isReFreshing: MutableLiveData<Boolean> =
+        MutableLiveData<Boolean>()
+    val isReFreshing = _isReFreshing
+
 
     init {
         getProductList()
     }
 
-    fun getProductList() {
+     fun getProductList() {
         viewModelScope.launch(Dispatchers.IO) {
             _products.postValue(NetworkResult.Loading())
             val result = productRepository.getProductList()
@@ -60,5 +65,13 @@ class ProductViewModel @Inject constructor(private val productRepository: Produc
     }
     fun swipeLeft(routeIndex: Int) {
         mSwipeGesture.postValue(Pair(routeIndex, SwipeGestures.Left))
+    }
+    fun refreshProductList() {
+        _isReFreshing.postValue(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = productRepository.getProductList()
+            _products.postValue(result)
+            _isReFreshing.postValue(false)
+        }
     }
 }
