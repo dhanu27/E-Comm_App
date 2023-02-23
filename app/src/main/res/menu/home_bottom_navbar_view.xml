@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <item
-     android:id="@+id/fragment_linear_view"
-     android:icon="@drawable/selector_tab_list_view"
-      android:title="@string/linear_view"
-      />
-  <item
-     android:id="@+id/fragment_grid_view"
-     android:icon="@drawable/selector_tab_list_view"
-      android:title="@string/grid_view" />
+    <item
+        android:id="@+id/fragment_linear_view"
+        android:icon="@drawable/selector_tab_list_view"
+        android:title=""
+  />
+    <item
+        android:id="@+id/fragment_grid_view"
+        android:icon="@drawable/selector_tab_list_view"
+        android:title=""
+        />
+    <item
+        android:id="@+id/empty_view_1"
+        android:icon="@drawable/selector_tab_list_view"
+        android:title=""
+        />
+    <item
+        android:id="@+id/empty_view_2"
+        android:icon="@drawable/selector_tab_list_view"
+        android:title=""
+        />
 
 </menu>
