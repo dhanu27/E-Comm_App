@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.myyour.e_comm_app.Utils.Constants.routesList
 import com.myyour.e_comm_app.adapter.ItemAdapter
 import com.myyour.e_comm_app.Utils.NetworkResult
 import com.myyour.e_comm_app.databinding.FragmentGridViewBinding
@@ -46,6 +47,16 @@ class FragmentGridView : Fragment() {
                 is NetworkResult.Error ->{
                     mBinding.errorRegion.errorText.text = it.msg
                 }
+            }
+        })
+        mBinding.itemRecyclerView.setOnTouchListener(object: OnSwipeTouchListener(context) {
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+                mProductViewModel.swipeLeft(1)
+            }
+            override fun onSwipeRight() {
+                super.onSwipeRight()
+                mProductViewModel.swipeRight(1)
             }
         })
     }

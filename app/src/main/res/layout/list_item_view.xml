@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    android:padding="16dp">
+    android:layout_marginBottom="@dimen/margin_standard"
+    >
 
     <ImageView
         android:id="@+id/imageView"
@@ -16,29 +16,46 @@
         android:padding="1dp"
         app:layout_constraintEnd_toStartOf="@+id/title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_marginStart="16dp"
-        android:textSize="16sp"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:textSize="@dimen/textSize_16sp"
         app:layout_constraintBottom_toTopOf="@+id/price"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@id/imageView"
-        tools:text="Title" />
-
+        tools:text="Title"
+        android:textColor="@color/black"
+        />
     <TextView
-        android:id="@+id/price"
+        android:id="@+id/mrp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@id/title"
-        tools:text="MRP: ₹130.0 " />
+        android:text="@string/mrp"
+        android:textColor="@color/extra_text"
+        app:layout_constraintStart_toStartOf="@id/title"
+        />
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="2dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/mrp"
+        app:layout_constraintStart_toEndOf="@+id/mrp"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="₹130.0"
+        android:textColor="@color/black"
+       />
 
     <TextView
         android:id="@+id/extra"
@@ -49,6 +66,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/price"
         tools:text="Same Day Shopping" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintStart_toStartOf="@id/mrp"
+        app:layout_constraintEnd_toEndOf="@id/extra"
+        android:background="@color/light_gray"
+        app:layout_constraintTop_toBottomOf="@id/price"
+        android:layout_marginTop="@dimen/margin_standard"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,15 +21,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_section_view"
         app:navGraph="@navigation/nav_graph"
-        tools:layout="@layout/fragment_linear_view" />
+        tools:layout="@layout/fragment_linear_view"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_container"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/home_bottom_navbar_view" />
+        app:menu="@menu/home_bottom_navbar_view"
+        android:background="@color/bottom_navBar_bg"
+        android:padding="@dimen/padding_16dp"
+       android:clipToPadding="false"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

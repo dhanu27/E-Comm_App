@@ -47,15 +47,28 @@ class FragmentLinearView : Fragment() {
                     mBinding.itemRecyclerView.layoutManager = linearLayoutManager
                     val itemList = it.data ?: emptyList();
                     mBinding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.LINEARVIEW)
-                    mBinding.itemRecyclerView.removeItemDecoration(itemDivider)
-                    mBinding.itemRecyclerView.addItemDecoration(
-                        itemDivider
-                    )
+//                    mBinding.itemRecyclerView.removeItemDecoration(itemDivider)
+//                    mBinding.itemRecyclerView.addItemDecoration(
+//                        itemDivider
+//                    )
                 }
                 is NetworkResult.Error -> {
                     mBinding.errorRegion.errorText.text = it.msg
                 }
             }
         })
+
+        mBinding.itemRecyclerView.setOnTouchListener(object: OnSwipeTouchListener(context) {
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+                mProductViewModel.swipeLeft(0)
+            }
+            override fun onSwipeRight() {
+                super.onSwipeRight()
+                mProductViewModel.swipeRight(0)
+            }
+        })
+
+
     }
 }

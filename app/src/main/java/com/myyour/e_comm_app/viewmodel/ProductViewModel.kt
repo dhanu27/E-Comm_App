@@ -6,7 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import com.myyour.e_comm_app.R
 import com.myyour.e_comm_app.Utils.NetworkResult
+import com.myyour.e_comm_app.Utils.enums.SwipeGestures
 import com.myyour.e_comm_app.model.DataDTO
 
 import com.myyour.e_comm_app.model.Item
@@ -22,9 +28,14 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductViewModel @Inject constructor(private val productRepository: ProductRepository) :
     ViewModel() {
-    private var _products:MutableLiveData<NetworkResult<List<Item>>> =
+    private var _products: MutableLiveData<NetworkResult<List<Item>>> =
         MutableLiveData<NetworkResult<List<Item>>>()
     val products = _products
+
+    private var mSwipeGesture: MutableLiveData<Pair<Int, SwipeGestures>> =
+        MutableLiveData<Pair<Int, SwipeGestures>>()
+    val swipeGesture = mSwipeGesture
+
 
     init {
         getProductList()
@@ -38,10 +49,16 @@ class ProductViewModel @Inject constructor(private val productRepository: Produc
         }
     }
 
-    fun getProductListOnSearch(searchString:String){
+    fun getProductListOnSearch(searchString: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = productRepository.getProductListByName(searchString)
             _products.postValue(result)
         }
+    }
+    fun swipeRight(routeIndex: Int) {
+        mSwipeGesture.postValue(Pair(routeIndex, SwipeGestures.Right))
+    }
+    fun swipeLeft(routeIndex: Int) {
+        mSwipeGesture.postValue(Pair(routeIndex, SwipeGestures.Left))
     }
 }

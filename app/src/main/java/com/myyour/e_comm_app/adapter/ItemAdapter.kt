@@ -30,7 +30,7 @@ class ItemAdapter(private val itemsList: List<Item>, private val viewType: VIEWT
 
         if (viewType == VIEWTYPE.LINEARVIEW) {
             holder.extraView?.text = itemsList[position].extra ?: ""
-            holder.priceView.text = Constants.mrpText + itemsList[position].price
+            holder.priceView.text = itemsList[position].price
         } else {
             holder.extraView?.text = ""
             holder.priceView.text = itemsList[position].price

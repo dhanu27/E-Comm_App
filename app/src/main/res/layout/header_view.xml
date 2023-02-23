@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray"
-    android:padding="@dimen/padding_16dp">
+    android:background="@color/header_bg"
+    android:padding="@dimen/padding_21dp">
 
     <TextView
         android:id="@+id/textView"
@@ -16,7 +16,8 @@
         android:textStyle="bold"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -27,7 +28,8 @@
         android:textSize="@dimen/textSize_16sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/bottom_menu"/>
 
     <SearchView
         android:id="@+id/searchName"
@@ -42,6 +44,8 @@
         android:searchIcon="@null"
         app:iconifiedByDefault="false"
         app:layout_constraintTop_toBottomOf="@id/textView2"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="16dp"
+        android:padding="@dimen/padding_16dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

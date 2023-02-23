@@ -9,4 +9,6 @@
     <dimen name="textSize_16sp">18sp</dimen>
     <dimen name="thirty_two_dp">32dp</dimen>
     <dimen name="grid_image_corner_radius">8dp</dimen>
+    <dimen name="padding_21dp">21dp</dimen>
+    <dimen name="padding_30dp">30dp</dimen>
 </resources>
