@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.myyour.e_comm_app.R
-import com.myyour.e_comm_app.Utils.Constants
 import com.myyour.e_comm_app.Utils.enums.VIEWTYPE
 import com.myyour.e_comm_app.model.Item
 import com.squareup.picasso.Picasso
@@ -20,7 +19,7 @@ class ItemAdapter(private val itemsList: List<Item>, private val viewType: VIEWT
         } else {
             LayoutInflater.from(parent.context).inflate(R.layout.grid_item_view, parent, false)
         }
-        return ItemViewHolder(itemView, viewType);
+        return ItemViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -38,21 +37,21 @@ class ItemAdapter(private val itemsList: List<Item>, private val viewType: VIEWT
     }
 
     override fun getItemCount(): Int {
-        return itemsList.size;
+        return itemsList.size
     }
 
     private fun setImageIntoView(position: Int, view: ImageView) {
-        val imgUrl: String = itemsList[position].image ?: "";
+        val imgUrl: String = itemsList[position].image ?: ""
         if (imgUrl.isEmpty().not()) {
-            Picasso.get().load(imgUrl).into(view);
+            Picasso.get().load(imgUrl).into(view)
         } else {
             // Set image to null if no image is there
-            view.setImageDrawable(null);
+            view.setImageDrawable(null)
         }
     }
 }
 
-class ItemViewHolder(itemView: View, viewType: VIEWTYPE) : RecyclerView.ViewHolder(itemView) {
+class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val titleTextView: TextView = itemView.findViewById(R.id.title)
     val imageView: ImageView = itemView.findViewById(R.id.imageView)
     val extraView: TextView? = itemView.findViewById(R.id.extra)

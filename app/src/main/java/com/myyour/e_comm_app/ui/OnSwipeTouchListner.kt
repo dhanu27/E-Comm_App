@@ -1,7 +1,6 @@
 package com.myyour.e_comm_app.ui
 
 import android.content.Context
-import android.text.method.Touch.onTouchEvent
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -68,6 +67,7 @@ open class OnSwipeTouchListener(ctx: Context?) : View.OnTouchListener {
 
     }
 
+    /* onSwipeRight ,onSwipeLeft, onSwipeTop , onSwipeBottom are touch events callbacks which implementation can override them*/
     open fun onSwipeRight() {}
 
     open fun onSwipeLeft() {}

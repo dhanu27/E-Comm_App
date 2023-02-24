@@ -1,12 +1,10 @@
 package com.myyour.e_comm_app.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.myyour.e_comm_app.adapter.ItemAdapter
 import com.myyour.e_comm_app.Utils.NetworkResult
@@ -16,14 +14,22 @@ import com.myyour.e_comm_app.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentGridView : Fragment() {
+class FragmentGridView : BaseFragment() {
     private val mProductViewModel: ProductViewModel by activityViewModels()
     private lateinit var mBinding: FragmentGridViewBinding
+    override lateinit var fragmentView: View
+    override fun swipeLeftCallBack() {
+        mProductViewModel.swipeLeft(0)
+    }
+
+    override fun swipeRightCallBack() {
+        mProductViewModel.swipeRight(0)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = FragmentGridViewBinding.inflate(inflater, container, false)
         return (mBinding.root)
     }
@@ -31,38 +37,29 @@ class FragmentGridView : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val gridLayoutManager = GridLayoutManager(activity, 3)
+        fragmentView = mBinding.itemRecyclerView
 
-        mProductViewModel.products?.observe(viewLifecycleOwner, Observer {
-            mBinding.loaderRegion.root.visibility = View.GONE;
+        mProductViewModel.products.observe(viewLifecycleOwner) {
+            mBinding.loaderRegion.root.visibility = View.GONE
             when (it) {
                 is NetworkResult.Loading -> {
-                    mBinding.loaderRegion.root.visibility = View.VISIBLE;
+                    mBinding.loaderRegion.root.visibility = View.VISIBLE
                 }
                 is NetworkResult.Loaded -> {
                     mBinding.itemRecyclerView.layoutManager = gridLayoutManager
-                    val itemList = it.data!!;
+                    val itemList = it.data!!
                     mBinding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.GRIDVIEW)
                 }
                 is NetworkResult.Error -> {
                     mBinding.errorRegion.errorText.text = it.msg
                 }
             }
-        })
-        mBinding.itemRecyclerView.setOnTouchListener(object : OnSwipeTouchListener(context) {
-            override fun onSwipeLeft() {
-                super.onSwipeLeft()
-                mProductViewModel.swipeLeft(1)
-            }
-
-            override fun onSwipeRight() {
-                super.onSwipeRight()
-                mProductViewModel.swipeRight(1)
-            }
-        })
+        }
+        swipeObservation()
         mBinding.swipeRefresh.setOnRefreshListener {
             mProductViewModel.refreshProductList()
         }
-        mProductViewModel.isReFreshing.observe(viewLifecycleOwner) {
+        mProductViewModel.isRefreshing.observe(viewLifecycleOwner) {
             mBinding.swipeRefresh.isRefreshing = it
         }
     }
