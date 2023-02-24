@@ -8,8 +8,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.myyour.e_comm_app.adapter.ItemAdapter
 import com.myyour.e_comm_app.Utils.NetworkResult
-import com.myyour.e_comm_app.databinding.FragmentGridViewBinding
 import com.myyour.e_comm_app.Utils.enums.VIEWTYPE
+import com.myyour.e_comm_app.databinding.FragmentGridViewBinding
 import com.myyour.e_comm_app.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,11 +19,11 @@ class FragmentGridView : BaseFragment() {
     private lateinit var mBinding: FragmentGridViewBinding
     override lateinit var fragmentView: View
     override fun swipeLeftCallBack() {
-        mProductViewModel.swipeLeft(0)
+        mProductViewModel.swipeLeft(1)
     }
 
     override fun swipeRightCallBack() {
-        mProductViewModel.swipeRight(0)
+        mProductViewModel.swipeRight(1)
     }
 
     override fun onCreateView(
