@@ -16,14 +16,14 @@ import javax.inject.Inject
 
 class ProductRepository @Inject constructor(
     @ApplicationContext private val applicationContext: Context,
-    private val productService: ProductService,
-    private val appDatabase: AppDatabase
+    private val mProductService: ProductService,
+    private val mAppDatabase: AppDatabase
 ) {
     suspend fun getProductList(): NetworkResult<List<Item>> {
 //      When user is online call APi else getData from DB
         if (InternetUtils.isOnline(applicationContext)) {
              try {
-                 val response = productService.getProductList(versionId)
+                 val response = mProductService.getProductList(versionId)
                 if (response.body() != null) {
                     val responseBody = response.body() as ResponseDTO
 
@@ -51,7 +51,7 @@ class ProductRepository @Inject constructor(
 
     private suspend fun setDataIntoLocalDB(productList: List<Item>) {
 //        First delete all items from list to remove redundancy
-        appDatabase.productDao().deleteAll()
+        mAppDatabase.productDao().deleteAll()
         // Insert Item into product entity
         val productRows: List<ProductEntity> = productList.map {
             ProductEntity(
@@ -59,11 +59,11 @@ class ProductRepository @Inject constructor(
                 price = it.price, extra = it.extra, image = it.image
             )
         }
-        appDatabase.productDao().insertAll(productRows)
+        mAppDatabase.productDao().insertAll(productRows)
     }
 
     private suspend fun getProductsListFromLocalDB(): List<Item> {
-        val productsList = appDatabase.productDao().getAll()
+        val productsList = mAppDatabase.productDao().getAll()
         return mapEntityToModel(productsList)
     }
 
@@ -79,7 +79,7 @@ class ProductRepository @Inject constructor(
 
     suspend fun getProductListByName(name:String) :NetworkResult<List<Item>> {
         return try {
-            val productsList = appDatabase.productDao().findProductsByName("%$name%")
+            val productsList = mAppDatabase.productDao().findProductsByName("%$name%")
             NetworkResult.Loaded(mapEntityToModel(productsList))
         }catch (e:Exception){
             NetworkResult.Loaded(getProductsListFromLocalDB())
