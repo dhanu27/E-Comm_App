@@ -6,9 +6,9 @@
     >
   <fragment
       android:id="@+id/fragment_linear_view"
-      android:name="com.myyour.e_comm_app.ui.FragmentLinearView"/>
+      android:name="com.myyour.eCommApp.ui.FragmentLinearView"/>
   <fragment
       android:id="@+id/fragment_grid_view"
-      android:name="com.myyour.e_comm_app.ui.FragmentGridView"/>
+      android:name="com.myyour.eCommApp.ui.FragmentGridView"/>
 
 </navigation>

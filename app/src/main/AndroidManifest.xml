@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.myyour.e_comm_app">
+    package="com.myyour.eCommApp">
    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
     <uses-permission
@@ -14,11 +14,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".App"
+        android:name="com.myyour.eCommApp.App"
         android:theme="@style/Theme.EComm_App"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.myyour.eCommApp.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
