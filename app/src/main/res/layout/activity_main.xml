@@ -21,8 +21,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_section_view"
         app:navGraph="@navigation/nav_graph"
-        tools:layout="@layout/fragment_linear_view"
+        tools:layout="@layout/linear_view_fragment"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_above="@+id/bottom_nav_container"
+        android:background="@color/bottom_navBar_topBorder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bottom_nav_container"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_container"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_container"
@@ -35,6 +44,9 @@
         android:background="@color/bottom_navBar_bg"
         android:padding="@dimen/padding_16dp"
        android:clipToPadding="false"
+        app:itemIconSize="32dp"
+        app:labelVisibilityMode="unlabeled"
+        app:itemIconTint="@null"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

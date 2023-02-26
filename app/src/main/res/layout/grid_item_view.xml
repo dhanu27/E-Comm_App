@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/margin_16dp"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="@dimen/margin_16dp">
 
     <ImageView
         android:id="@+id/imageView"
@@ -23,20 +23,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_half"
-        android:text="Item 1"
         android:textFontWeight="600"
-        android:textSize="14sp"
+        android:textSize="@dimen/textSize_14sp"
         app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"/>
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:text = "Item 1"/>
     <TextView
         android:id="@+id/price"
         style="@style/GridItemPriceStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="₹100.0"
         android:textFontWeight="600"
-        android:textSize="14sp"
+        android:textSize="@dimen/textSize_14sp"
         app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:text="₹100.0"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

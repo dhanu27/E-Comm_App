@@ -36,7 +36,7 @@ class AppDatabaseTest {
     }
 
     @Test
-    fun insertAndGetProduct() = runBlocking {
+    fun `test_insertProduct_expectedGetProduct`() = runBlocking {
         val product = ProductEntity(
             id = 10,
             name = "TestItem",
@@ -50,7 +50,7 @@ class AppDatabaseTest {
     }
 
     @Test
-    fun insertAndDeleteProduct() = runBlocking {
+    fun `test_delete_expectedSuccess`() = runBlocking {
         val product = ProductEntity(
             id = 11,
             name = "TestItem",
@@ -62,5 +62,19 @@ class AppDatabaseTest {
         dao.delete(product)
         val products = dao.getAll()
         assertThat(!products.contains(product)).isTrue()
+    }
+    @Test
+    fun `test_findByName_expectedSuccess`() = runBlocking {
+        val product = ProductEntity(
+            id = 11,
+            name = "TestItem",
+            price = "1202",
+            extra = "Shipping To Shopping"
+        )
+        dao.insertProduct(product)
+        delay(100L)
+        dao.findProductsByName("%${product.name}%")
+        val products = dao.getAll()
+        assertThat(products.contains(product)).isTrue()
     }
 }

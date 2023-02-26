@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.myyour.eCommApp.adapter.ItemAdapter
 import com.myyour.eCommApp.Utils.NetworkResult
 import com.myyour.eCommApp.Utils.enums.VIEWTYPE
-import com.myyour.eCommApp.databinding.FragmentGridViewBinding
+import com.myyour.eCommApp.databinding.GridViewFragmentBinding
 import com.myyour.eCommApp.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentGridView : BaseFragment() {
+class GridViewFragment : BaseFragment() {
     private val mProductViewModel: ProductViewModel by activityViewModels()
-    private lateinit var mBinding: FragmentGridViewBinding
+    private lateinit var mBinding: GridViewFragmentBinding
     override lateinit var fragmentView: View
     override fun swipeLeftCallBack() {
         mProductViewModel.swipeLeft(1)
@@ -30,7 +30,7 @@ class FragmentGridView : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mBinding = FragmentGridViewBinding.inflate(inflater, container, false)
+        mBinding = GridViewFragmentBinding.inflate(inflater, container, false)
         return (mBinding.root)
     }
 

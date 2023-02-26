@@ -8,16 +8,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.myyour.eCommApp.adapter.ItemAdapter
 import com.myyour.eCommApp.Utils.NetworkResult
-import com.myyour.eCommApp.databinding.FragmentLinearViewBinding
 import com.myyour.eCommApp.Utils.enums.VIEWTYPE
+import com.myyour.eCommApp.databinding.LinearViewFragmentBinding
 import com.myyour.eCommApp.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class FragmentLinearView : BaseFragment() {
+class LinearViewFragment : BaseFragment() {
     private val mProductViewModel: ProductViewModel by activityViewModels()
-    private lateinit var mBinding: FragmentLinearViewBinding
+    private lateinit var mBinding: LinearViewFragmentBinding
 
     override lateinit var fragmentView: View
     override fun swipeLeftCallBack() {
@@ -31,7 +31,7 @@ class FragmentLinearView : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        mBinding = FragmentLinearViewBinding.inflate(inflater, container, false)
+        mBinding = LinearViewFragmentBinding.inflate(inflater, container, false)
         return (mBinding.root)
     }
 

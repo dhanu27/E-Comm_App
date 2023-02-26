@@ -2,13 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragment_linear_view"
+    app:startDestination="@id/linear_view_fragment"
     >
   <fragment
-      android:id="@+id/fragment_linear_view"
-      android:name="com.myyour.eCommApp.ui.FragmentLinearView"/>
+      android:id="@+id/linear_view_fragment"
+      android:name="com.myyour.eCommApp.ui.LinearViewFragment"/>
   <fragment
-      android:id="@+id/fragment_grid_view"
-      android:name="com.myyour.eCommApp.ui.FragmentGridView"/>
+      android:id="@+id/grid_view_fragment"
+      android:name="com.myyour.eCommApp.ui.GridViewFragment"/>
 
 </navigation>

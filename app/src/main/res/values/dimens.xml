@@ -2,12 +2,17 @@
 <resources>
     <dimen name="padding_standard">8dp</dimen>
     <dimen name="padding_16dp">16dp</dimen>
+    <dimen name="padding_1dp">1dp</dimen>
     <dimen name="margin_16dp">16dp</dimen>
     <dimen name="margin_standard">12dp</dimen>
     <dimen name="margin_half">6dp</dimen>
     <dimen name="textSize_18sp">18sp</dimen>
     <dimen name="textSize_16sp">18sp</dimen>
+    <dimen name="textSize_14sp">14sp</dimen>
     <dimen name="thirty_two_dp">32dp</dimen>
+    <dimen name="eight_dp">8dp</dimen>
+    <dimen name="two_dp">2dp</dimen>
+    <dimen name="sixteen_dp">16dp</dimen>
     <dimen name="grid_image_corner_radius">8dp</dimen>
     <dimen name="padding_21dp">21dp</dimen>
     <dimen name="padding_30dp">30dp</dimen>

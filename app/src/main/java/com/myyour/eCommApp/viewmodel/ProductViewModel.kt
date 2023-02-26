@@ -45,8 +45,8 @@ class ProductViewModel @Inject constructor(private val productRepository: Produc
        return job
     }
 
-    fun getProductListOnSearch(searchString: String) {
-        viewModelScope.launch(dispatcher) {
+    fun getProductListOnSearch(searchString: String):Job {
+        return viewModelScope.launch(dispatcher) {
             val result = productRepository.getProductListByName(searchString)
             mProducts.postValue(result)
         }
