@@ -1,7 +1,6 @@
 package com.myyour.eCommApp.repository
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import com.myyour.eCommApp.Utils.Constants.versionId
 import com.myyour.eCommApp.Utils.InternetUtils
@@ -26,9 +25,9 @@ class ProductRepository @Inject constructor(
     suspend fun getProductList(): NetworkResult<List<Item>> {
 //      When user is online call APi else getData from DB
         if (InternetUtils.isOnline(applicationContext)) {
-             try {
-                 Log.d("thread","**1-${Thread.currentThread().name}}")
-                 val response = mProductService.getProductList(versionId)
+
+            try {
+                val response = mProductService.getProductList(versionId)
                 if (response.body() != null) {
                     val responseBody = response.body() as ResponseDTO
 
@@ -41,7 +40,6 @@ class ProductRepository @Inject constructor(
                     CoroutineScope(Dispatchers.IO).launch {
                         setDataIntoLocalDB(productList)
                     }
-                    Log.d("thread","**3-${Thread.currentThread().name}}")
                     return NetworkResult.Loaded(productList)
                 } else {
 
@@ -50,7 +48,7 @@ class ProductRepository @Inject constructor(
                     return NetworkResult.Error(response.errorBody().toString())
                 }
             } catch (e: Exception) {
-                 return NetworkResult.Error("Something Went Wrong")
+                return NetworkResult.Error("Something Went Wrong")
             }
         } else {
             val itemsList = getProductsListFromLocalDB()
@@ -59,7 +57,6 @@ class ProductRepository @Inject constructor(
     }
 
     private suspend fun setDataIntoLocalDB(productList: List<Item>) {
-        Log.d("thread","**4-${Thread.currentThread().name}}")
 //        First delete all items from list to remove redundancy
         mAppDatabase.productDao().deleteAll()
         // Insert Item into product entity
@@ -70,7 +67,6 @@ class ProductRepository @Inject constructor(
             )
         }
         mAppDatabase.productDao().insertAll(productRows)
-        Log.d("thread","**5-${Thread.currentThread().name}}")
     }
 
     private suspend fun getProductsListFromLocalDB(): List<Item> {
@@ -88,11 +84,11 @@ class ProductRepository @Inject constructor(
         return newProductList
     }
 
-    suspend fun getProductListByName(name:String) :NetworkResult<List<Item>> {
+    suspend fun getProductListByName(name: String): NetworkResult<List<Item>> {
         return try {
             val productsList = mAppDatabase.productDao().findProductsByName("%$name%")
             NetworkResult.Loaded(mapEntityToModel(productsList))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             NetworkResult.Loaded(getProductsListFromLocalDB())
         }
     }

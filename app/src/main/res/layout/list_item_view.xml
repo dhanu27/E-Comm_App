@@ -67,7 +67,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/price"
         app:layout_constraintStart_toEndOf="@id/price"
-        android:paddingStart="@dimen/padding_16dp"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:paddingStart="@dimen/padding_21dp"
         tools:text="Same Day Shopping" />
 
     <View
