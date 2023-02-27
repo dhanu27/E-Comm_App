@@ -8,7 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.myyour.eCommApp.adapter.ItemAdapter
 import com.myyour.eCommApp.Utils.NetworkResult
-import com.myyour.eCommApp.Utils.enums.VIEWTYPE
+import com.myyour.eCommApp.Utils.ViewTypes
 import com.myyour.eCommApp.databinding.LinearViewFragmentBinding
 import com.myyour.eCommApp.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +39,8 @@ class LinearViewFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         val linearLayoutManager = LinearLayoutManager(activity)
         fragmentView = mBinding.itemRecyclerView
+        val viewType : ViewTypes = ViewTypes()
+        viewType.setViewType(ViewTypes.LINEARVIEW)
 
         mProductViewModel.products.observe(viewLifecycleOwner) {
             mBinding.loaderRegion.root.visibility = View.GONE
@@ -49,7 +51,7 @@ class LinearViewFragment : BaseFragment() {
                 is NetworkResult.Loaded -> {
                     mBinding.itemRecyclerView.layoutManager = linearLayoutManager
                     val itemList = it.data ?: emptyList()
-                    mBinding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.LINEARVIEW)
+                    mBinding.itemRecyclerView.adapter = ItemAdapter(itemList, viewType)
                 }
                 is NetworkResult.Error -> {
                     mBinding.errorRegion.errorText.text = it.msg

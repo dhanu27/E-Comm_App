@@ -34,7 +34,7 @@ class ProductRepositoryTest {
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
-      MockitoAnnotations.initMocks(this)
+      MockitoAnnotations.openMocks(this)
     }
 
     @Test

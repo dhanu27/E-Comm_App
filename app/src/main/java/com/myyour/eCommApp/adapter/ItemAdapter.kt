@@ -7,33 +7,41 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.myyour.eCommApp.R
-import com.myyour.eCommApp.Utils.enums.VIEWTYPE
+import com.myyour.eCommApp.Utils.ViewTypes
+import com.myyour.eCommApp.Utils.ViewTypes.Companion.GRIDVIEW
+import com.myyour.eCommApp.Utils.ViewTypes.Companion.LINEARVIEW
 import com.myyour.eCommApp.model.Item
 import com.squareup.picasso.Picasso
 
-class ItemAdapter(private val itemsList: List<Item>, private val viewType: VIEWTYPE) :
+class ItemAdapter(private val itemsList: List<Item>, private val viewType: ViewTypes) :
     RecyclerView.Adapter<ItemViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewTypes: Int): ItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val itemView: View = when (viewType) {
-            VIEWTYPE.LINEARVIEW -> LayoutInflater.from(parent.context)
+            LINEARVIEW -> LayoutInflater.from(parent.context)
                 .inflate(R.layout.list_item_view, parent, false)
-            VIEWTYPE.GRIDVIEW -> LayoutInflater.from(parent.context)
+            GRIDVIEW -> LayoutInflater.from(parent.context)
                 .inflate(R.layout.grid_item_view, parent, false)
+            else -> {
+                LayoutInflater.from(parent.context)
+                .inflate(R.layout.list_item_view, parent, false)}
         }
-
         return ItemViewHolder(itemView)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+       return  viewType.getViewType()
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.titleTextView.text = itemsList[position].name
-
+         val viewTypeInt:Int = viewType.getViewType()
         setImageIntoView(position, holder.imageView)
-        when (viewType) {
-            VIEWTYPE.LINEARVIEW -> {
+        when (viewTypeInt) {
+           LINEARVIEW -> {
                 holder.extraView?.text = itemsList[position].extra ?: ""
                 holder.priceView.text = itemsList[position].price
             }
-            VIEWTYPE.GRIDVIEW -> {
+            GRIDVIEW -> {
                 holder.extraView?.text = ""
                 holder.priceView.text = itemsList[position].price
             }

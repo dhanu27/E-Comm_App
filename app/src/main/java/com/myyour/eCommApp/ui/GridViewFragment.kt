@@ -8,7 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.myyour.eCommApp.adapter.ItemAdapter
 import com.myyour.eCommApp.Utils.NetworkResult
-import com.myyour.eCommApp.Utils.enums.VIEWTYPE
+import com.myyour.eCommApp.Utils.ViewTypes
 import com.myyour.eCommApp.databinding.GridViewFragmentBinding
 import com.myyour.eCommApp.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +38,8 @@ class GridViewFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         val gridLayoutManager = GridLayoutManager(activity, 3)
         fragmentView = mBinding.itemRecyclerView
+        val viewType : ViewTypes = ViewTypes()
+        viewType.setViewType(ViewTypes.GRIDVIEW)
 
         mProductViewModel.products.observe(viewLifecycleOwner) {
             mBinding.loaderRegion.root.visibility = View.GONE
@@ -48,7 +50,7 @@ class GridViewFragment : BaseFragment() {
                 is NetworkResult.Loaded -> {
                     mBinding.itemRecyclerView.layoutManager = gridLayoutManager
                     val itemList = it.data!!
-                    mBinding.itemRecyclerView.adapter = ItemAdapter(itemList, VIEWTYPE.GRIDVIEW)
+                    mBinding.itemRecyclerView.adapter = ItemAdapter(itemList,viewType)
                 }
                 is NetworkResult.Error -> {
                     mBinding.errorRegion.errorText.text = it.msg
