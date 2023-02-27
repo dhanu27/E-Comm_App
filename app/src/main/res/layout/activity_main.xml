@@ -46,7 +46,7 @@
        android:clipToPadding="false"
         app:itemIconSize="32dp"
         app:labelVisibilityMode="unlabeled"
-        app:itemIconTint="@null"
+        app:itemIconTint= "@color/bottom_nav_item"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
