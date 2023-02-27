@@ -18,11 +18,19 @@ import com.myyour.eCommApp.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
+/**
+ * Main activity
+ *
+ * This is MainActivity class in this initialize the activity_main layout , create the navController,
+ *  handling the search func. , navigate to different fragment on swipe
+ *  mMenuItemsArray -> Array contain all bottom navbar menu items because there ids needed
+ *  to navigate as fragments and their ids are same
+ */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val mProductViewModel: ProductViewModel by viewModels()
     private lateinit var mMainActivityBinding: ActivityMainBinding
-    private var mMenuItemsArray : ArrayList<MenuItem> = ArrayList()
+    private var mMenuItemsArray: ArrayList<MenuItem> = ArrayList()
     private lateinit var mNavController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,12 +49,12 @@ class MainActivity : AppCompatActivity() {
         handleSearchBar()
         observeFragmentSwipeGestures()
         /**
-          While searching if swipe to refresh action perform clear the search query and update the list
+        While searching if swipe to refresh action perform clear the search query and update the list
          */
-        mProductViewModel.isRefreshing.observe(this){
-           if(it) {
-               mMainActivityBinding.headerSectionView.searchName.setQuery("", true)
-           }
+        mProductViewModel.isRefreshing.observe(this) {
+            if (it) {
+                mMainActivityBinding.headerSectionView.searchName.setQuery("", true)
+            }
         }
     }
 
@@ -67,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     private fun observeFragmentSwipeGestures() {
         mProductViewModel.swipeGesture.observe(this) {
             val index: Int = it.first
-            when(it.second){
+            when (it.second) {
                 SwipeGestures.Right -> {
                     if (index > 0) {
                         handleNavigation(mMenuItemsArray[index - 1])
@@ -83,9 +91,8 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     private fun handleNavigation(id: MenuItem) {
-        NavigationUI.onNavDestinationSelected(id, mNavController )
+        NavigationUI.onNavDestinationSelected(id, mNavController)
     }
 
 }

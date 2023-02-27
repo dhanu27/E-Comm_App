@@ -14,14 +14,29 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 
+/**
+ * Product repository
+ * Its wrapper class of data or model layer all calls to data took from here
+ * @property applicationContext -> Require application context for internet is there or not
+ * @property mProductService -> Instance of Product Service need to call getProductList
+ * @property mAppDatabase -> Database Instance
+ */
 class ProductRepository @Inject constructor(
     @ApplicationContext private val applicationContext: Context,
     private val mProductService: ProductService,
     private val mAppDatabase: AppDatabase
 ) {
+    /**
+     * Get product list
+     * Function check internet connection and basis of that call api of
+     * get data from DB . Adn update the DB
+     * Return NetworkResult class instance with state one of the state from
+     * Loaded or Error
+     */
     suspend fun getProductList(): NetworkResult<List<Item>> {
 //      When user is online call APi else getData from DB
         if (InternetUtils.isOnline(applicationContext)) {
@@ -55,11 +70,14 @@ class ProductRepository @Inject constructor(
             return NetworkResult.Loaded(itemsList)
         }
     }
-
+    /**
+       First delete all items from list to remove redundancy in data
+       an then insert new data of class Item into product entity table
+       by converting Item object to ProductEntity
+     */
     private suspend fun setDataIntoLocalDB(productList: List<Item>) {
-//        First delete all items from list to remove redundancy
+
         mAppDatabase.productDao().deleteAll()
-        // Insert Item into product entity
         val productRows: List<ProductEntity> = productList.map {
             ProductEntity(
                 name = it.name,
@@ -84,6 +102,9 @@ class ProductRepository @Inject constructor(
         return newProductList
     }
 
+    /**
+     * Get product list by searching the name  in the DB
+     */
     suspend fun getProductListByName(name: String): NetworkResult<List<Item>> {
         return try {
             val productsList = mAppDatabase.productDao().findProductsByName("%$name%")

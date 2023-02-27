@@ -14,6 +14,14 @@ import com.myyour.eCommApp.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
+/**
+ * Linear view fragment
+ *
+ *  * This is Linear View Fragment class which inherit from BaseFragment
+ *  Its index is Zero as it associate with first  tab in bottom navbar
+ *  Its viewtype is ViewTypes.LINEARVIEW -> 0
+ *  It uses the ItemAdapter to render the recycler view and passes the LINEARVIEW in viewType
+ */
 @AndroidEntryPoint
 class LinearViewFragment : BaseFragment() {
     private val mProductViewModel: ProductViewModel by activityViewModels()

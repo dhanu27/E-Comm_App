@@ -13,6 +13,14 @@ import com.myyour.eCommApp.databinding.GridViewFragmentBinding
 import com.myyour.eCommApp.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Grid view fragment
+ *
+ * This is Grid View Fragment which inherit the BaseFragment
+ *  Its index is One as it associate with second tab in bottom navbar
+ *  Its viewtype is ViewTypes.GRIDVIEW -> 1
+ *  It uses the ItemAdapter to render the recycler view and passes the GRIDVIEW in viewType
+ */
 @AndroidEntryPoint
 class GridViewFragment : BaseFragment() {
     private val mProductViewModel: ProductViewModel by activityViewModels()

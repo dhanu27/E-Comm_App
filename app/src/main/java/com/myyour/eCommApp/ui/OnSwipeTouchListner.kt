@@ -6,6 +6,14 @@ import android.view.MotionEvent
 import android.view.View
 
 
+/**
+ * On swipe touch listener
+ *
+ * It listen the swipe events and finalizes which one is right ,top, left, bottom,
+ * and provide callbacks for them So class which use them can override them
+ *
+ * @param ctx
+ */
 open class OnSwipeTouchListener(ctx: Context?) : View.OnTouchListener {
 
     private val gestureDetector: GestureDetector
@@ -67,12 +75,27 @@ open class OnSwipeTouchListener(ctx: Context?) : View.OnTouchListener {
 
     }
 
-    /* onSwipeRight ,onSwipeLeft, onSwipeTop , onSwipeBottom are touch events callbacks which implementation can override them*/
+    /**
+     * On swipe right
+     *
+     *//* onSwipeRight ,onSwipeLeft, onSwipeTop , onSwipeBottom are touch events callbacks which implementation can override them*/
     open fun onSwipeRight() {}
 
+    /**
+     * On swipe left
+     *
+     */
     open fun onSwipeLeft() {}
 
+    /**
+     * On swipe top
+     *
+     */
     open fun onSwipeTop() {}
 
+    /**
+     * On swipe bottom
+     *
+     */
     open fun onSwipeBottom() {}
 }

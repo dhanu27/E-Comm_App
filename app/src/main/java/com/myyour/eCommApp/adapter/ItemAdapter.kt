@@ -13,11 +13,17 @@ import com.myyour.eCommApp.Utils.ViewTypes.Companion.LINEARVIEW
 import com.myyour.eCommApp.model.Item
 import com.squareup.picasso.Picasso
 
+/**
+ * Item adapter which use by both linear and grid view recycler to show the data
+ * ViewHolder -> ItemViewHolder
+ * @property itemsList - > It's  list of items that recycler view will show
+ * @property viewType - > Whether its of LinearView(0) or GridView(1)
+ */
 class ItemAdapter(private val itemsList: List<Item>, private val viewType: ViewTypes) :
     RecyclerView.Adapter<ItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val itemView: View = when (viewType) {
-            LINEARVIEW -> LayoutInflater.from(parent.context)
+            0 -> LayoutInflater.from(parent.context)
                 .inflate(R.layout.list_item_view, parent, false)
             GRIDVIEW -> LayoutInflater.from(parent.context)
                 .inflate(R.layout.grid_item_view, parent, false)
@@ -63,6 +69,12 @@ class ItemAdapter(private val itemsList: List<Item>, private val viewType: ViewT
     }
 }
 
+/**
+ * Item view holder
+ *
+ * @constructor - > It require one view to hold the view So adapter can update
+ * view contents . Values needs to get updated are property of this class.
+ */
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val titleTextView: TextView = itemView.findViewById(R.id.title)
     val imageView: ImageView = itemView.findViewById(R.id.imageView)
