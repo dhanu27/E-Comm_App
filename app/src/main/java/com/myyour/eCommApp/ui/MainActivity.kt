@@ -40,6 +40,14 @@ class MainActivity : AppCompatActivity() {
         mMainActivityBinding.bottomNavContainer.menu?.forEach { item -> mMenuItemsArray.add(item) }
         handleSearchBar()
         observeFragmentSwipeGestures()
+        /**
+          While searching if swipe to refresh action perform clear the search query and update the list
+         */
+        mProductViewModel.isRefreshing.observe(this){
+           if(it) {
+               mMainActivityBinding.headerSectionView.searchName.setQuery("", true)
+           }
+        }
     }
 
     private fun handleSearchBar() {
